@@ -7,7 +7,7 @@ def addItalic(result):
     return "<i>%s</i>" % (result,)
 
 def printHTML(result):
-    print result
+    print(result)
 
 d = Deferred()
 d.addCallback(addBold)

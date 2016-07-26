@@ -3,10 +3,11 @@ from twisted.cred.checkers import ICredentialsChecker
 from twisted.cred.credentials import IUsernameHashedPassword
 from twisted.internet.defer import Deferred
 
-from zope.interface import implements
+from zope.interface import implements,implementer
 
+@implementer(ICredentialsChecker)
 class DBCredentialsChecker(object):
-    implements(ICredentialsChecker)
+    # implements(ICredentialsChecker)
 
     credentialInterfaces = (IUsernameHashedPassword,)
 

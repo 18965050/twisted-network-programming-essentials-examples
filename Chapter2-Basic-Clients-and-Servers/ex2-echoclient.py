@@ -2,10 +2,10 @@ from twisted.internet import reactor, protocol
 
 class EchoClient(protocol.Protocol):
    def connectionMade(self):
-       self.transport.write("Hello, world!")
+       self.transport.write("Hello, world!".encode())
 
    def dataReceived(self, data):
-       print "Server said:", data
+       print("Server said:", data)
        self.transport.loseConnection()
 
 class EchoFactory(protocol.ClientFactory):
@@ -13,11 +13,11 @@ class EchoFactory(protocol.ClientFactory):
        return EchoClient()
 
    def clientConnectionFailed(self, connector, reason):
-       print "Connection failed."
+       print("Connection failed.")
        reactor.stop()
 
    def clientConnectionLost(self, connector, reason):
-       print "Connection lost."
+       print("Connection lost.")
        reactor.stop()
 
 reactor.connectTCP("localhost", 8000, EchoFactory())

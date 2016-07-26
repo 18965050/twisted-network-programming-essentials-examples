@@ -11,7 +11,7 @@ class QuoteProtocol(protocol.Protocol):
         self.transport.write(self.factory.quote)
 
     def dataReceived(self, data):
-        print "Received quote:", data
+        print("Received quote:", data)
         self.transport.loseConnection()
 
 class QuoteClientFactory(protocol.ClientFactory):
@@ -22,11 +22,11 @@ class QuoteClientFactory(protocol.ClientFactory):
         return QuoteProtocol(self)
 
     def clientConnectionFailed(self, connector, reason):
-        print 'connection failed:', reason.getErrorMessage()
+        print('connection failed:', reason.getErrorMessage())
         maybeStopReactor()
 
     def clientConnectionLost(self, connector, reason):
-        print 'connection lost:', reason.getErrorMessage()
+        print('connection lost:', reason.getErrorMessage())
         maybeStopReactor()
 
 def maybeStopReactor():
@@ -43,5 +43,5 @@ quotes = [
 quote_counter = len(quotes)
 
 for quote in quotes:
-    reactor.connectTCP('localhost', 8000, QuoteClientFactory(quote))
+    reactor.connectTCP('localhost', 8000, QuoteClientFactory(quote.encode()))
 reactor.run()

@@ -5,21 +5,21 @@ from twisted.web.client import Agent
 from twisted.web.http_headers import Headers
 
 def printHeaders(response):
-    print 'HTTP version:', response.version
-    print 'Status code:', response.code
-    print 'Status phrase:', response.phrase
-    print 'Response headers:'
+    print('HTTP version:', response.version)
+    print('Status code:', response.code)
+    print('Status phrase:', response.phrase)
+    print('Response headers:')
     for header, value in response.headers.getAllRawHeaders():
-        print header, value
+        print(header, value)
 
 def printError(failure):
-    print >>sys.stderr, failure
+    print(failure, file=sys.stderr)
 
 def stop(result):
     reactor.stop()
 
 if len(sys.argv) != 2:
-    print >>sys.stderr, "Usage: python print_metadata.py URL"
+    print("Usage: python print_metadata.py URL", file=sys.stderr)
     exit(1)
 
 agent = Agent(reactor)

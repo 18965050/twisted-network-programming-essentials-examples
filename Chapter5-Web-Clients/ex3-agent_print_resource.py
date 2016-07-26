@@ -10,7 +10,7 @@ class ResourcePrinter(Protocol):
         self.finished = finished
 
     def dataReceived(self, data):
-        print data
+        print(data)
 
     def connectionLost(self, reason):
         self.finished.callback(None)
@@ -21,13 +21,13 @@ def printResource(response):
     return finished
 
 def printError(failure):
-    print >>sys.stderr, failure
+    print(failure, file=sys.stderr)
 
 def stop(result):
     reactor.stop()
 
 if len(sys.argv) != 2:
-    print >>sys.stderr, "Usage: python agent_print_resource.py URL"
+    print("Usage: python agent_print_resource.py URL", file=sys.stderr)
     exit(1)
 
 agent = Agent(reactor)

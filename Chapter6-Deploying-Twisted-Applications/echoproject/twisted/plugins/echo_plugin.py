@@ -1,4 +1,5 @@
 from zope.interface import implements
+from zope.interface import implementer
 
 from twisted.application.service import IServiceMaker
 from twisted.application import internet
@@ -10,8 +11,9 @@ from echo import EchoFactory
 class Options(usage.Options):
     optParameters = [["port", "p", 8000, "The port number to listen on."]]
 
+@implementer(IServiceMaker, IPlugin)
 class EchoServiceMaker(object):
-    implements(IServiceMaker, IPlugin)
+    # implements(IServiceMaker, IPlugin)
     tapname = "echo"
     description = "A TCP-based echo server."
     options = Options
@@ -23,3 +25,4 @@ class EchoServiceMaker(object):
         return internet.TCPServer(int(options["port"]), EchoFactory())
 
 serviceMaker = EchoServiceMaker()
+

@@ -1,4 +1,4 @@
-from zope.interface import implements, Interface
+from zope.interface import implements, Interface, implementer
 
 from twisted.cred import checkers, credentials, portal
 from twisted.internet import protocol, reactor
@@ -10,8 +10,9 @@ class IProtocolAvatar(Interface):
         Clean up per-login resources allocated to this avatar.
         """
 
+@implementer(IProtocolAvatar)
 class EchoAvatar(object):
-    implements(IProtocolAvatar)
+    # implements(IProtocolAvatar)
 
     def logout(self):
         pass
@@ -29,7 +30,7 @@ class Echo(basic.LineReceiver):
 
     def lineReceived(self, line):
         if not self.avatar:
-            username, password = line.strip().split(" ")
+            username, password = line.decode().strip().split(" ")
             self.tryLogin(username, password)
         else:
             self.sendLine(line)
@@ -41,13 +42,14 @@ class Echo(basic.LineReceiver):
                           IProtocolAvatar).addCallbacks(self._cbLogin,
                                                         self._ebLogin)
 
-    def _cbLogin(self, (interface, avatar, logout)):
+    def _cbLogin(self, xxx_todo_changeme):
+        (interface, avatar, logout) = xxx_todo_changeme
         self.avatar = avatar
         self.logout = logout
-        self.sendLine("Login successful, please proceed.")
+        self.sendLine(b"Login successful, please proceed.")
 
     def _ebLogin(self, failure):
-        self.sendLine("Login denied, goodbye.")
+        self.sendLine(b"Login denied, goodbye.")
         self.transport.loseConnection()
 
 class EchoFactory(protocol.Factory):
@@ -59,8 +61,9 @@ class EchoFactory(protocol.Factory):
         proto.portal = self.portal
         return proto
 
+@implementer(portal.IRealm)
 class Realm(object):
-    implements(portal.IRealm)
+    # implements(portal.IRealm)
 
     def requestAvatar(self, avatarId, mind, *interfaces):
         if IProtocolAvatar in interfaces:

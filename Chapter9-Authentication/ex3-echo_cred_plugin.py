@@ -4,7 +4,7 @@ from twisted.cred import credentials, portal, strcred
 from twisted.plugin import IPlugin
 from twisted.python import usage
 
-from zope.interface import implements
+from zope.interface import implements,implementer
 
 from echo_cred import EchoFactory, Realm
 
@@ -13,8 +13,9 @@ class Options(usage.Options, strcred.AuthOptionMixin):
     optParameters = [["port", "p", 8000,
                       "The port number to listen on."]]
 
+@implementer(IServiceMaker, IPlugin)
 class EchoServiceMaker(object):
-    implements(IServiceMaker, IPlugin)
+    # implements(IServiceMaker, IPlugin)
     tapname = "echo"
     description = "A TCP-based echo server."
     options = Options

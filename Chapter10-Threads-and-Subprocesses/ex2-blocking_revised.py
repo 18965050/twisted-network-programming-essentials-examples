@@ -8,10 +8,10 @@ def blockingApiCall(arg):
     return arg
 
 def nonblockingCall(arg):
-    print arg
+    print(arg)
 
 def printResult(result):
-    print result
+    print(result)
 
 def finish(result):
     reactor.stop()

@@ -11,9 +11,9 @@ class HTTPEchoProtocol(basic.LineReceiver):
             self.sendResponse()
 
     def sendResponse(self):
-        self.sendLine("HTTP/1.1 200 OK")
-        self.sendLine("")
-        responseBody = "You said:\r\n\r\n" + "\r\n".join(self.lines)
+        self.sendLine(b"HTTP/1.1 200 OK")
+        self.sendLine(b"")
+        responseBody = "You said:\r\n\r\n".encode() + "\r\n".encode().join(self.lines)
         self.transport.write(responseBody)
         self.transport.loseConnection()
 

@@ -18,11 +18,11 @@ class HeadlineRetriever(object):
         return self.d
 
 def printData(result):
-    print result
+    print(result)
     reactor.stop()
 
 def printError(failure):
-    print failure
+    print(failure)
     reactor.stop()
 
 h = HeadlineRetriever()

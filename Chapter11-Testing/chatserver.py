@@ -36,7 +36,7 @@ class ChatProtocol(LineReceiver):
         self.broadcastMessage(message)
 
     def broadcastMessage(self, message):
-        for name, protocol in self.factory.users.iteritems():
+        for name, protocol in self.factory.users.items():
             if protocol != self:
                 protocol.sendLine(message)
 
